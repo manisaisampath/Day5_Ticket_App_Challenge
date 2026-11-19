@@ -36,6 +36,18 @@ def test_tickets_are_sorted_by_priority(client):
     ]
 
     assert priorities == ["High", "High", "Medium", "Medium", "Low"]
+def test_empty_title_returns_400(client):
+    response = client.post(
+        "/api/tickets",
+        json={
+            "title": "",
+            "description": "Testing empty title",
+            "category": "Hardware",
+            "priority": "High"
+        }
+    )
+
+    assert response.status_code == 400
 
 
 # Add your own tests below: one failing test for each bug you find,
