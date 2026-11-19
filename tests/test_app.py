@@ -48,6 +48,63 @@ def test_empty_title_returns_400(client):
     )
 
     assert response.status_code == 400
+def test_unknown_category_returns_400(client):
+    response = client.post(
+        "/api/tickets",
+        json={
+            "title": "Printer jam",
+            "category": "Furniture"
+        }
+    )
+
+    assert response.status_code == 400
+def test_unknown_priority_returns_400(client):
+    response = client.post(
+        "/api/tickets",
+        json={
+            "title": "Printer jam",
+            "category": "Hardware",
+            "priority": "Urgent"
+        }
+    )
+
+    assert response.status_code == 400
+def test_unknown_status_returns_400(client):
+    response = client.patch(
+        "/api/tickets/1/status",
+        json={"status": "Pending"}
+    )
+
+    assert response.status_code == 400
+def test_updating_unknown_ticket_returns_404(client):
+    response = client.patch(
+        "/api/tickets/999/status",
+        json={"status": "Resolved"}
+    )
+
+    assert response.status_code == 404
+def test_missing_title_returns_400(client):
+    response = client.post(
+        "/api/tickets",
+        json={
+            "description": "Testing missing title",
+            "category": "Hardware",
+            "priority": "High"
+        }
+    )
+
+    assert response.status_code == 400
+def test_missing_title_returns_400(client):
+    response = client.post(
+        "/api/tickets",
+        json={
+            "description": "Testing missing title",
+            "category": "Hardware",
+            "priority": "High"
+        }
+    )
+
+    assert response.status_code == 400
 
 
 # Add your own tests below: one failing test for each bug you find,
